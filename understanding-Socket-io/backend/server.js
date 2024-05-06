@@ -1,13 +1,29 @@
 import express from 'express';
-const app = express();
-const port = 3000;
+import http from 'http';
+import { Server } from 'socket.io';
 
-app.get("/", (req, res) => {
+const port = 3000;
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:5173',
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
+
+
+// receive request from WS client
+io.on('connection', (socket) => {
+    console.log(`new User Connected ID: ${socket.id}`);
+});
+
+app.get('/', (req, res) => {
     res.send('Server is Ready');
 });
 
-app.listen(port, () => {
-    console.log(`Server is Running on Port ${port}`);
+server.listen(port, () => {
+    console.log(`Server is Running on Port: ${port}`);
 });
-
 
