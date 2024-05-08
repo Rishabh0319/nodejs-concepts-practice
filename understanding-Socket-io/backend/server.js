@@ -17,6 +17,11 @@ const io = new Server(server, {
 // receive request from WS client
 io.on('connection', (socket) => {
     console.log(`new User Connected ID: ${socket.id}`);
+
+    socket.on('messege', (receiveMsgData) => {
+        console.log(receiveMsgData);
+    });
+
 });
 
 app.get('/', (req, res) => {
@@ -26,4 +31,12 @@ app.get('/', (req, res) => {
 server.listen(port, () => {
     console.log(`Server is Running on Port: ${port}`);
 });
+
+
+
+
+
+
+
+
 
